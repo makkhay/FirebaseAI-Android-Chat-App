@@ -24,7 +24,7 @@ A chatting app powered by AI bot. In addition, this app also demonstrates the us
 ![chat_demo](https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/first.gif)
 
 <div style={{display: flex; flex-direction: row}}>
-  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/login.png" width="265" />
+  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/login.png" width="27" />
   <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/register.png" width="270" />
   <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/phone_register.png" width="270" />
  
@@ -32,9 +32,9 @@ A chatting app powered by AI bot. In addition, this app also demonstrates the us
 
 <div style={{display: flex; flex-direction: row}}>
   <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/chat.png" width="270" />
-  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/dashboard.png" width="274" />
-  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/barchart.png" width="274" />
-  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/firebase.png" width="274" />
+  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/dashboard.png" width="270" />
+  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/barchart.png" width="270" />
+  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/firebase.png" width="270" height="400" />
   
   
  
