@@ -60,6 +60,7 @@ import com.makkhay.chat.R;
 import com.makkhay.chat.model.Message;
 import com.makkhay.chat.util.Config;
 import com.makkhay.chat.util.ExpandableListAdapter;
+import com.makkhay.chat.util.MyPreferences;
 import com.yarolegovich.lovelydialog.LovelyChoiceDialog;
 import com.yarolegovich.lovelydialog.LovelyInfoDialog;
 
@@ -125,8 +126,15 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
 
         // initialize lottie
         animationView = (LottieAnimationView) findViewById(R.id.lottieClear);
-        // will show targetview tutorial
-        showTutorial();
+
+        boolean isFirstTime = MyPreferences.isFirstTutorial(ChatActivity.this);
+
+        // Only show once
+        if(isFirstTime){
+
+            showTutorial();
+        }
+
         chatTV = (TextView) findViewById(R.id.chat_title);
         chatTV.setText("AI chat  "+ getEmojiByUnicode(unicode));
 

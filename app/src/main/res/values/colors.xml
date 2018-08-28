@@ -17,8 +17,7 @@
     <color name="black">#000000</color>
     <color name="lime">#cddc39</color>
 
-
-
+    <color name="black_overlay">#66000000</color>
 
 
 </resources>

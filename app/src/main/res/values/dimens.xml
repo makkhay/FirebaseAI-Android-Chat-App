@@ -15,4 +15,12 @@
     <dimen name="speech_bubble_corners_plus_tail">15dp</dimen>
     <dimen name="speech_bubble_spacing">5dp</dimen>
     <dimen name="speech_bubble_tail">25dp</dimen>
+
+    <dimen name="ob_desc_padding">30dp</dimen>
+    <dimen name="ob_banner_height">300dp</dimen>
+    <dimen name="items_inbetween">8dp</dimen>
+
+    <dimen name="button_text">18sp</dimen>
+    <dimen name="ob_header_text_size">22sp</dimen>
+    <dimen name="ob_desc_text_size">18sp</dimen>
 </resources>

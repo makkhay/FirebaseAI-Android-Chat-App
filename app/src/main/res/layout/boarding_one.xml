@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+
+    <ImageView
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:id="@+id/iv_onboard"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ob_banner_height"
+        android:gravity="center"
+        android:scaleType="fitCenter"
+        android:src="@drawable/first_onboard" />
+
+    <RelativeLayout
+        android:layout_below="@+id/iv_onboard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="@dimen/ob_desc_padding"
+                android:paddingRight="@dimen/ob_desc_padding"
+                android:text="Chat With AI Bot"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/ob_header_text_size" />
+
+            <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:paddingLeft="@dimen/ob_desc_padding"
+                android:paddingRight="@dimen/ob_desc_padding"
+                android:text="Have a logical and nice conversation with the bot"
+                android:textColor="@color/black"
+                android:textSize="@dimen/ob_desc_text_size" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

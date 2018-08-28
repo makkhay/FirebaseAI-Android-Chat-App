@@ -8,15 +8,15 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.CAMERA"> </uses-permission>
+    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        tools:replace="supportsRtl"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="supportsRtl">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -28,11 +28,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentBackground">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.RegisterActivity"
@@ -45,37 +41,35 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.DashboardActivity"
-            android:label="Dashboard"
-
-            />
+            android:label="Dashboard" />
         <activity
             android:name=".ui.BarChartActivity"
-            android:label="Vertical Bar Chart"
-            />
+            android:label="Vertical Bar Chart" />
         <activity
             android:name=".ui.HorizontalBarChartActivity"
-            android:label="Horizontal Bar Chart"
-            />
+            android:label="Horizontal Bar Chart" />
         <activity
             android:name=".ui.LineChartActivity"
-            android:label="Duo Line Chart"
-            />
+            android:label="Duo Line Chart" />
         <activity
             android:name=".ui.SingleLineActivity"
-            android:label="Single Line Chart"
-            />
+            android:label="Single Line Chart" />
         <activity
             android:name=".ui.PieChartActivity"
-            android:label="Pie Chart"
-            />
+            android:label="Pie Chart" />
+        <activity android:name=".ui.PhoneLoginActivity" />
+        <activity android:name=".ui.PhoneRegisterActivity" />
+        <activity android:name=".ui.VerifyPhoneActivity"></activity>
         <activity
-            android:name=".ui.PhoneLoginActivity"
-            />
-        <activity
-            android:name=".ui.PhoneRegisterActivity"
-            />
-        <activity
-            android:name=".ui.VerifyPhoneActivity">
+            android:name=".ui.OnBoardingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Chat"
+            android:theme="@style/FullscreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
     </application>

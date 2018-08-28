@@ -63,5 +63,7 @@ dependencies {
     compile 'com.getkeepsafe.taptargetview:taptargetview:1.8.0'
     compile 'com.airbnb.android:lottie:2.0.0'
     compile 'com.erikagtierrez.multiple_media_picker:multiple-media-picker:1.0.3'
+    compile 'com.github.apl-devs:appintro:v4.2.0'
+
 }
 apply plugin: 'com.google.gms.google-services'
