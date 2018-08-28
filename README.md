@@ -1,7 +1,7 @@
 # Firebase-Android-Chat-Application
 <p align="center">
   <a href="https://github.com/makkhay/CameraTranslate2">
-    <img alt="daug" src="https://github.com/makkhay/CameraTranslate2/blob/master/ScreenShots/camera_icon.png" width="250">
+    <img alt="daug" src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/app/src/main/res/mipmap-hdpi/ic_launcher.png" width="250">
   </a>
 </p>
 
