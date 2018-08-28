@@ -13,6 +13,7 @@ A chatting app powered by AI bot. In addition, this app also demonstrates the us
 
 ## Functionality
 - Users can sign up using email/password or phone number.
+- Login credentials are stored in firebase database for authentication. 
 - Automatic sign in when phone number is used.  
 - Powered by AI bot so that users can have a logical conversation.
 - Demonstrates different charts such as graph, piechart, line chart, duo chart and bar graphs.
@@ -33,6 +34,7 @@ A chatting app powered by AI bot. In addition, this app also demonstrates the us
   <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/chat.png" width="270" />
   <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/dashboard.png" width="274" />
   <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/barchart.png" width="274" />
+  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/firebase.png" width="274" />
   
   
  
