@@ -24,14 +24,17 @@ A chatting app powered by AI bot. In addition, this app also demonstrates the us
 
 <div style={{display: flex; flex-direction: row}}>
   <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/login.png" width="265" />
-  <img src="ScreenShots/1.png" width="270" />
-  <img src="ScreenShots/4.png" width="270" />
+  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/register.png" width="270" />
+  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/phone_register.png" width="270" />
  
 </div>
 
 <div style={{display: flex; flex-direction: row}}>
-  <img src="ScreenShots/scan.png" width="270" />
-  <img src="ScreenShots/3.png" width="274" />
+  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/chat.png" width="270" />
+  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/dashboard.png" width="274" />
+  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/barchart.png" width="274" />
+  
+  
  
 
 
