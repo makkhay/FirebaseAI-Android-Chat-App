@@ -6,14 +6,14 @@
 </p>
 
 
-# What's AI Chatbot app 
+# What's AI Chatbot app? 
 A chatting app powered by AI bot. In addition, this app also demonstrates the use of graphing chart libraries. 
 
 
 
 ## Functionality
-- Users can sign up using email/password or phone number
-- Automatic sign in when phone number is used  
+- Users can sign up using email/password or phone number.
+- Automatic sign in when phone number is used.  
 - Powered by AI bot so that users can have a logical conversation.
 - Demonstrates different charts such as graph, piechart, line chart, duo chart and bar graphs.
 
