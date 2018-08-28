@@ -102,7 +102,7 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
     HashMap<String, List<String>> listDataChild;
     int unicode = 0x1F4AC;
     //Icons for expandable menu
-    public static int[] icon = { R.drawable.baseline_dashboard_black_18dp, R.drawable.baseline_chat_black_18dp};
+    public static int[] icon = { R.drawable.icon_dashboard, R.drawable.icons_chat};
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -670,9 +670,9 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
 
         // Adding child data
         List<String> heading1 = new ArrayList<String>();
-        heading1.add("Show all chart");
-        heading1.add("Show pie chart");
-        heading1.add("Show bar chart");
+        heading1.add("View Dashboard");
+        heading1.add("View Piechart");
+        heading1.add("View Barchart");
         List<String> heading2 = new ArrayList<String>();
         heading2.add("Transfer money");
         heading2.add("Mute chat");
