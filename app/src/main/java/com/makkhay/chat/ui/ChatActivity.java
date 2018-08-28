@@ -6,11 +6,9 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
@@ -18,26 +16,24 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.menu.MenuBuilder;
-import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -58,18 +54,21 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.getkeepsafe.taptargetview.TapTarget;
-import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.makkhay.chat.R;
 import com.makkhay.chat.model.Message;
 import com.makkhay.chat.util.Config;
+import com.makkhay.chat.util.ExpandableListAdapter;
+import com.yarolegovich.lovelydialog.LovelyChoiceDialog;
+import com.yarolegovich.lovelydialog.LovelyInfoDialog;
 
 import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import io.realm.Realm;
@@ -80,41 +79,56 @@ import io.realm.RealmResults;
 public class ChatActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
 
     private String name="";
-
     private ImageButton btnSend, btnPick;
     private EditText inputMsg;
     private ListView listViewMessages;
-
     private static int RESULT_LOAD_IMAGE = 1;
     Realm realm;
     Context context;
     RequestQueue queue;
     LayoutInflater inflater;
-    private MessagesListAdapter mAdapter;
+    private MessageListAdapter mAdapter;
     private ArrayList<Message> messageList;
     public static final String TAG = "MainActivity";
     ImageView imageView;
     private LottieAnimationView animationView;
     private TextView chatTV;
+    private  Intent changeActivity;
+    View view_Group;
+    private DrawerLayout mDrawerLayout;
+    ExpandableListAdapter mMenuAdapter;
+    ExpandableListView expandableList;
+    List<String> listDataHeader;
+    HashMap<String, List<String>> listDataChild;
+    int unicode = 0x1F4AC;
+    //Icons for expandable menu
+    public static int[] icon = { R.drawable.baseline_dashboard_black_18dp, R.drawable.baseline_chat_black_18dp};
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            expandableList.setIndicatorBounds(expandableList.getRight()- 80, expandableList.getWidth());
+        } else {
+            expandableList.setIndicatorBoundsRelative(expandableList.getRight()- 80, expandableList.getWidth());
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         setContentView(R.layout.activity_test);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        // initialize lottie
         animationView = (LottieAnimationView) findViewById(R.id.lottieClear);
-        chatTV = (TextView) findViewById(R.id.chat_title);
-
+        // will show targetview tutorial
         showTutorial();
-
-        int unicode = 0x1F4AC;
-
-        chatTV.setText("AI Chat  "+ getEmojiByUnicode(unicode));
-
-
+        chatTV = (TextView) findViewById(R.id.chat_title);
+        chatTV.setText("AI chat  "+ getEmojiByUnicode(unicode));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -122,21 +136,96 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        expandableList = (ExpandableListView) findViewById(R.id.navigationmenu);
+
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        navigationView.setItemIconTintList(null);
+
+        if (navigationView != null) {
+            setupDrawerContent(navigationView);
+        }
+
+        // populate data to expandable ListView
+        prepareListData();
+        mMenuAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+        // setting list adapter
+        expandableList.setAdapter(mMenuAdapter);
+        expandableList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView,
+                                        View view,
+                                        int groupPosition,
+                                        int childPosition, long id) {
+                // Menu 1; do something on click
+                if(childPosition==0 && groupPosition == 0){
+                    changeActivity = new Intent(ChatActivity.this, DashboardActivity.class);
+                    startActivity(changeActivity);
+                } else if(childPosition == 1 && groupPosition == 0 ){
+
+                    changeActivity = new Intent(ChatActivity.this, PieChartActivity.class);
+                    startActivity(changeActivity);
+                } else if(childPosition == 2 && groupPosition == 0 ){
+
+                    changeActivity = new Intent(ChatActivity.this, BarChartActivity.class);
+                    startActivity(changeActivity);
+                }
+
+                //Menu 2; do something on click
+                if(childPosition==0 && groupPosition == 1){
+                    // Show a dialog when the button is pressed
+                    String[] items = getResources().getStringArray(R.array.food);
+                    new LovelyChoiceDialog(ChatActivity.this)
+                            .setTopColorRes(R.color.colorPrimaryDark)
+                            .setTitle("Send money to ")
+                            .setIcon(R.drawable.ic_add_friend)
+                            .setItemsMultiChoice(items, new LovelyChoiceDialog.OnItemsSelectedListener<String>() {
+                                @Override
+                                public void onItemsSelected(List<Integer> positions, List<String> items) {
+
+                                }
+                            })
+                            .setConfirmButtonText("Confirm")
+                            .show();
+                } else if(childPosition == 1 && groupPosition == 1 ){
+                    // Show a dialog when the button is pressed
+                    new LovelyInfoDialog(ChatActivity.this)
+                            .setTopColorRes(R.color.colorPrimaryDark)
+                            .setIcon(R.drawable.ic_menu_send)
+                            //This will add Don't show again checkbox to the dialog. You can pass any ID as argument
+                            .setTitle("Mute Chat ?")
+                            .setMessage("By doing so all notification will be muted. ")
+                            .show();
+
+                }
+                //Set background color when an item is selected
+                view.setSelected(true);
+                view_Group = view;
+                view_Group.setBackgroundColor(Color.parseColor("#d4dce6"));
+                mDrawerLayout.closeDrawers();
+                return false;
+            }
+        });
+        expandableList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                //Log.d("DEBUG", "heading clicked");
+                return false;
+            }
+        });
 
         btnSend = (ImageButton) findViewById(R.id.btnSend);
         btnPick = (ImageButton) findViewById(R.id.pick);
         inputMsg = (EditText) findViewById(R.id.inputMsg);
         listViewMessages = (ListView) findViewById(R.id.list_view);
 
-
         context = getApplicationContext();
         queue = Volley.newRequestQueue(context);
         inflater = getLayoutInflater();
         messageList = new ArrayList<>();
-
         name ="You";
         realm = Realm.getInstance(context);
 
@@ -151,9 +240,9 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
             realm.commitTransaction();
         }
 
-
-        mAdapter = new MessagesListAdapter(this, messageList);
+        mAdapter = new MessageListAdapter(this, messageList);
         listViewMessages.setAdapter(mAdapter);
+        // Do something when an item from chat bubbles is pressed
         listViewMessages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -163,6 +252,7 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
                 Log.d(TAG, "onItemClick: " + mssg.getMessage());
                 Toast.makeText(getApplicationContext(),"Copied Text to Clipboard ",Toast.LENGTH_LONG).show();
 
+                // Save the clicked text to clipboard for copy pasting
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("My Clipboard", clipboardText);
                 assert clipboard != null;
@@ -170,13 +260,13 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
             }
         });
 
+        // Send message when button is clicked
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendMessage();
             }
         });
-
 
         btnPick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,11 +282,8 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
-
                         int id = item.getItemId();
-
                         if(id == R.id.send_Pic){
-
                             Intent intent = new Intent();
                             intent.setType("image/*");
                             intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -252,6 +339,10 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
         sendMessageToServer(msg);
     }
 
+    /**
+     * A method to send message to server.
+     * @param msg is a string, which is sent to chatbot api for the messaging purposes.
+     */
     private void sendMessageToServer(final String msg)
     {
         String url = Config.URL+"?apiKey="+Config.apiKey+"&message="+msg+"&chatBotID="+Config.chatBotID+"&externalID="+Config.externalID;
@@ -259,7 +350,6 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
                         if (response != null && response.length() > 0) {
                             try {
                                 if(response.getInt("success")==1)
@@ -277,7 +367,6 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
                                 }
                                 else
                                 {
-
                                     String error=response.getString("errorMessage");
                                     Toast.makeText(getApplicationContext(), "Error: "+error, Toast.LENGTH_SHORT).show();
                                 }
@@ -307,19 +396,64 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-
         jsonObjectRequest.setRetryPolicy(policy);
         jsonObjectRequest.setTag(TAG);
         queue.add(jsonObjectRequest);
     }
 
+    /**
+     * This is a method to check if the request code sent while sending image and video is met.
+     * If the code matches then do something
+     * @param reqCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
 
-    public class MessagesListAdapter extends BaseAdapter {
+        if (resultCode == RESULT_OK) {
+            try {
+                final Uri imageUri = data.getData();
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                imageView.setImageBitmap(selectedImage);
+                displayAnimation("loading.json");
+                Toast.makeText(getApplicationContext(),"Success!! ",Toast.LENGTH_SHORT).show();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+            }
+
+        }else {
+            Toast.makeText(getApplicationContext(), "You haven't picked anything",Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    private void appendMessage(final Message m) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                messageList.add(m);
+                mAdapter.notifyDataSetChanged();
+                // Playing device's notification
+                playBeep();
+            }
+        });
+    }
+
+    /**
+     * Util adapter class to display the data.
+     * It's an interface between the data source and the layout.
+     */
+    public class MessageListAdapter extends BaseAdapter {
 
         private Context context;
         private List<Message> messagesItems;
 
-        public MessagesListAdapter(Context context, List<Message> navDrawerItems) {
+        public MessageListAdapter(Context context, List<Message> navDrawerItems) {
             this.context = context;
             this.messagesItems = navDrawerItems;
         }
@@ -357,67 +491,26 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
 
             TextView lblFrom = (TextView) convertView.findViewById(R.id.lblMsgFrom);
             TextView txtMsg = (TextView) convertView.findViewById(R.id.txtMsg);
-
             txtMsg.setText(m.getMessage());
             lblFrom.setText(m.getChatBotName());
-
             imageView = (ImageView) convertView.findViewById(R.id.pictureView);
-//            imageView.setImageResource(R.mipmap.ic_email);
-
             return convertView;
         }
     }
 
-
-    @Override
-    protected void onActivityResult(int reqCode, int resultCode, Intent data) {
-        super.onActivityResult(reqCode, resultCode, data);
-
-
-        if (resultCode == RESULT_OK) {
-            try {
-                final Uri imageUri = data.getData();
-                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                imageView.setImageBitmap(selectedImage);
-                displayAnimation("loading.json");
-
-                Toast.makeText(getApplicationContext(),"URI is: "+ imageUri.toString(),Toast.LENGTH_SHORT).show();
-
-
-
-
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
-            }
-
-        }else {
-            Toast.makeText(getApplicationContext(), "You haven't picked anything",Toast.LENGTH_LONG).show();
-        }
-    }
-
-
-    private void appendMessage(final Message m) {
-        runOnUiThread(new Runnable() {
-
-            @Override
-            public void run() {
-                messageList.add(m);
-                mAdapter.notifyDataSetChanged();
-                // Playing device's notification
-                playBeep();
-            }
-        });
-    }
-
-
+    /**
+     * Checks if internet is connected
+     * @param context
+     * @return
+     */
     private boolean networkIsAvailable(final Context context) {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
+    /**
+     * Play a sound when message is recieved.
+     */
     public void playBeep() {
 
         try {
@@ -447,12 +540,10 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
         realm.close();
 
     }
-
     @Override
     protected void onResume() {
         super.onResume();
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -469,7 +560,6 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
         getMenuInflater().inflate(R.menu.test, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -492,23 +582,14 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_gallery) {
-
-            Intent a = new Intent(this, DashboardActivity.class);
-            startActivity(a);
-
-        }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
+    /**
+     * This method will display the targetview tutorial.
+     */
     private void showTutorial(){
-
         TapTargetView.showFor(this,                 // `this` is an Activity
                 TapTarget.forView(findViewById(R.id.inputMsg), "Get Started", "Type your message here and the AI bot will reply you ")
                         // All options below are optional
@@ -532,11 +613,12 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
                         displayAnimation("welcome.json");
                     }
                 });
-
-
-
     }
 
+    /**
+     * This a method to display the lottie animation
+     * @param animFileName is passed on to this method so that users can select their desired file
+     */
     private void displayAnimation(final String animFileName){
         new Handler().post(new Runnable() {
             @Override
@@ -566,13 +648,50 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
         });
     }
 
+    /**
+     * Method to display the emoji in TextView
+     * @param unicode
+     * @return
+     */
     public String getEmojiByUnicode(int unicode){
         return new String(Character.toChars(unicode));
     }
 
+    /**
+     * This is a method to populate the list data.
+     * The Listview is populated with a static list to display menu
+     */
+    private void prepareListData() {
+        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<String>>();
+        // Adding data header
+        listDataHeader.add("Dashboard");
+        listDataHeader.add("Chat");
 
+        // Adding child data
+        List<String> heading1 = new ArrayList<String>();
+        heading1.add("Show all chart");
+        heading1.add("Show pie chart");
+        heading1.add("Show bar chart");
+        List<String> heading2 = new ArrayList<String>();
+        heading2.add("Transfer money");
+        heading2.add("Mute chat");
 
+        listDataChild.put(listDataHeader.get(0), heading1);// Header, Child data
+        listDataChild.put(listDataHeader.get(1), heading2);
 
+    }
 
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(true);
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    }
+                });
+    }
 
 }

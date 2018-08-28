@@ -20,9 +20,7 @@ import com.makkhay.chat.ui.SingleLineActivity;
 
 import java.util.List;
 
-/**
- * Created by Ravi Tamada on 18/05/16.
- */
+
 public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.MyViewHolder> {
 
     private Context mContext;

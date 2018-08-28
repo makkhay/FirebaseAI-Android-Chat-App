@@ -8,33 +8,27 @@ import android.os.Bundle;
 
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.makkhay.chat.R;
 import com.makkhay.chat.model.ChartModel;
 import com.makkhay.chat.util.ChartAdapter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ChartAdapter adapter;
-    private List<ChartModel> albumList;
+    private List<ChartModel> chartList;
 
     private Toolbar toolbar;
 
@@ -44,13 +38,10 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         setActionbar();
-
-
-
         initCollapsingToolbar();
 
-        albumList = new ArrayList<>();
-        adapter = new ChartAdapter(this, albumList);
+        chartList = new ArrayList<>();
+        adapter = new ChartAdapter(this, chartList);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(
                 R.id.recycler_view);
@@ -67,15 +58,8 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
         recyclerView.setLayoutManager(manager);
-
-
         prepareAlbums();
 
-//        try {
-//            Glide.with(this).load(R.drawable.dash_back1).into((ImageView) findViewById(R.id.backdrop));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
 
     /**
@@ -111,7 +95,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     /**
-     * Adding few albums for testing
+     * Adding charts
      */
     private void prepareAlbums() {
         int[] covers = new int[]{
@@ -123,19 +107,19 @@ public class DashboardActivity extends AppCompatActivity {
         };
 
         ChartModel a = new ChartModel("Line",  covers[0]);
-        albumList.add(a);
+        chartList.add(a);
 
         a = new ChartModel("Duo Line", covers[1]);
-        albumList.add(a);
+        chartList.add(a);
 
         a = new ChartModel("Vertical Graph ", covers[2]);
-        albumList.add(a);
+        chartList.add(a);
 
         a = new ChartModel("Pie Chart",  covers[3]);
-        albumList.add(a);
+        chartList.add(a);
 
         a = new ChartModel("Horizontal Graph",  covers[4]);
-        albumList.add(a);
+        chartList.add(a);
 
         adapter.notifyDataSetChanged();
     }
@@ -220,13 +204,10 @@ public class DashboardActivity extends AppCompatActivity {
                 actionBar = getSupportActionBar();
 
             }
-
             if (actionBar != null) {
                 actionBar.setDisplayHomeAsUpEnabled(true);
 
-
             }
-
         }
 
     }

@@ -1,8 +1,6 @@
 package com.makkhay.chat.model;
 
-/**
- * Created by Lincoln on 18/05/16.
- */
+
 public class ChartModel {
     private String name;
     private int thumbnail;

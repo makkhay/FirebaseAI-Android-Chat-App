@@ -50,13 +50,8 @@ public class LoginActivity extends AppCompatActivity {
     FloatingActionButton fab;
     private final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-
-
-
-
     private EditText editTextUsername, editTextPassword;
     private LovelyProgressDialog waitingDialog;
-
     private AuthUtils authUtils;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -65,7 +60,6 @@ public class LoginActivity extends AppCompatActivity {
     private static final String[] spinnerItem = {"Choose Country","United States (+1)", "Other"};
     private Button sendCodeButton;
     private EditText phoneEditText;
-
 
     @Override
     protected void onStart() {
@@ -78,16 +72,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-
         fab = (FloatingActionButton) findViewById(R.id.fab);
         editTextUsername = (EditText) findViewById(R.id.et_username);
         editTextPassword = (EditText) findViewById(R.id.et_password);
         firstTimeAccess = true;
         initFirebase();
-
-
-
 
         final Switch switchToPhone = (Switch) findViewById(R.id.switch1);
 
@@ -146,15 +135,10 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             });
 
-
-
-
                         } if(selectedCountry ==2){
                             Toast.makeText(getApplicationContext()," Your Country is not supported :(", Toast.LENGTH_LONG).show();
                             sendCodeButton.setEnabled(false);
                         }
-
-
 
                     }
 
@@ -163,10 +147,6 @@ public class LoginActivity extends AppCompatActivity {
                         // TODO Auto-generated method stub
                     }
                 });
-
-
-
-
 
                 btn_dialog_bottom_sheet_cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -178,20 +158,14 @@ public class LoginActivity extends AppCompatActivity {
                 switchToPhone.setChecked(false);
 
 
-
             }
         });
-
-
-
 
 
     }
 
 
-
     private void initFirebase() {
-        //Khoi tao thanh phan de dang nhap, dang ky
         mAuth = FirebaseAuth.getInstance();
         authUtils = new AuthUtils();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -213,7 +187,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        //Khoi tao dialog waiting khi dang nhap
         waitingDialog = new LovelyProgressDialog(this).setCancelable(false);
     }
 

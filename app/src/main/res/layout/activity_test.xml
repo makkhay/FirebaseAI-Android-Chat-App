@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
@@ -7,10 +8,6 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
-
-
-
-
     <include
         layout="@layout/activity_chat"
         android:layout_width="match_parent"
@@ -22,12 +19,19 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:background="@drawable/chat_back"
+        android:background="#d4dce6"
         app:headerLayout="@layout/nav_header_test"
-        app:menu="@menu/activity_test_drawer" />
+        app:menu="@menu/activity_test_drawer"
+        >
 
-
-
-
+        <ExpandableListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="225dp"
+            android:choiceMode="singleChoice"
+            android:background="#d4dce6"
+            android:id="@+id/navigationmenu">
+        </ExpandableListView>
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

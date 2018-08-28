@@ -2,9 +2,6 @@ package com.makkhay.chat.model;
 
 import io.realm.RealmObject;
 
-/**
- * Created by Upendra on 4/2/2017.
- */
 
 
 public class Message extends RealmObject {

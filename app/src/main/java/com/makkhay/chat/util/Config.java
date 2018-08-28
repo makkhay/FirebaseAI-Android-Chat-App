@@ -1,8 +1,5 @@
 package com.makkhay.chat.util;
 
-/**
- * Created by Upendra on 4/2/2017.
- */
 
 public class Config {
     public static final String URL = "https://www.personalityforge.com/api/chat/";
