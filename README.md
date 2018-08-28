@@ -23,7 +23,7 @@ A chatting app powered by AI bot. In addition, this app also demonstrates the us
 ![chat_demo](https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/first.gif)
 
 <div style={{display: flex; flex-direction: row}}>
-  <img src="ScreenShots/onboard.png" width="265" />
+  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/login.png" width="265" />
   <img src="ScreenShots/1.png" width="270" />
   <img src="ScreenShots/4.png" width="270" />
  
