@@ -34,7 +34,7 @@ A chatting app powered by AI bot. In addition, this app also demonstrates the us
   <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/chat.png" width="270" />
   <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/dashboard.png" width="270" />
   <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/barchart.png" width="270" />
-  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/firebase.png" width="670" height="400" />
+  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/firebase.png" width="770" height="400" />
   
   
  
