@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dashboard_grad"
+    android:paddingEnd="0dp"
+    android:paddingStart="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="340dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:adjustViewBounds="true"
+            >
+
+            <Spinner
+                android:id="@+id/spinnerCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="72dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/phoneEditText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </Spinner>
+
+            <EditText
+                android:id="@+id/phoneEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="51dp"
+                app:layout_constraintBottom_toTopOf="@+id/sendCode"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.501"
+                android:hint="Your Phone Number"
+                android:textColorHint="@android:color/white"
+                android:textColor="@android:color/white"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/sendCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="83dp"
+                android:layout_marginTop="41dp"
+                android:text="Get Code"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@android:color/black"
+                />
+
+
+
+        </android.support.constraint.ConstraintLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp">
+
+            <!--<Button-->
+                <!--android:id="@+id/btn_dialog_bottom_sheet_ok"-->
+                <!--style="@style/Widget.AppCompat.Button.Borderless"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:text="Okay"-->
+                <!--android:textColor="@color/colorAccent" />-->
+
+            <Button
+                android:id="@+id/btn_dialog_bottom_sheet_cancel"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:text="Cancel"
+                android:textColor="@android:color/white"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

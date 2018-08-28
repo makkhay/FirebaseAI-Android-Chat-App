@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#11998e</color>
+    <color name="colorPrimaryDark">#11998e</color>
+    <color name="colorAccent">#4fa881</color>
+    <color name="colorIndivateTab">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="colorCardView">#f7f7f7</color>
+    <color name="grey_200">#EEEEEE</color>
+    <color name="grey_500">#a4a4a4</color>
+    <color name="grey_100">#F5F5F5</color>
+
+    <color name="bg_msg_you">#15a89c</color>
+    <color name="bg_msg_from">#9E9E9E</color>
+    <color name="accent">#FFCC00</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="lime">#cddc39</color>
+
+
+
+
+
+</resources>

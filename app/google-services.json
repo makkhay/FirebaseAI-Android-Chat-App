@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "139636138673",
+    "firebase_url": "https://clerkie-test.firebaseio.com",
+    "project_id": "clerkie-test",
+    "storage_bucket": "clerkie-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:139636138673:android:9e32c3065ed02959",
+        "android_client_info": {
+          "package_name": "com.makkhay.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "139636138673-o833mc24qfti6i2rhni8ntm4028quq6k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.makkhay.chat",
+            "certificate_hash": "cd09647a8b6507a9d5e9e5c64b40ee93a502fc33"
+          }
+        },
+        {
+          "client_id": "139636138673-664mje3hvbbc8qed8ca7p4a037p35sje.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUJgnw0tputDibuWrEQWvJXJKISkr_QN0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "139636138673-664mje3hvbbc8qed8ca7p4a037p35sje.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

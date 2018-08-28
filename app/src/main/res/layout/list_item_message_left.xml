@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp"
+    android:paddingLeft="10dp">
+
+    <TextView
+        android:id="@+id/lblMsgFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:textColor="#000000"
+        android:textStyle="italic"
+        android:padding="5dp"/>
+
+    <TextView
+        android:id="@+id/txtMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="80dp"
+        android:textColor="#ffffff"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="@drawable/bg_msg_you"
+
+        />
+    <ImageView
+        android:id="@+id/pictureView"
+        android:layout_width="210dp"
+        android:layout_height="88dp"
+        />
+
+
+</LinearLayout>
