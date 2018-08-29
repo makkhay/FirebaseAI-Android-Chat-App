@@ -21,7 +21,7 @@ A chatting app powered by AI bot. In addition, this app also demonstrates the us
 
 ## Demo and Screenshots
 
-![chat_demo](https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/first.gif)
+![chat_demo](https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/first_gifff.gif)
 
 <div style={{display: flex; flex-direction: row}}>
   <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/onboarding.png" width="270" />
@@ -68,11 +68,11 @@ credentials or forgot their password, then they can reset their credentials)
 send)
 - [x] User can copy / paste text from the chat log into the message box
 - [x] Your chatroom must be interactive.
-- [x] Allow users to post videos and photos in chat using some basic animation ( picture and video cannot be displayed but users can pick. Animation is also added) 
+- [ ] Allow users to post videos and photos in chat using some basic animation ( The online chat API doesn't accept anything other than a string so picture and video cannot be displayed but users can pick. Animation is also added. ) 
 - [x] Add a chat shortcut button with various shortcut options and some basic animations
 
 ### TODO Part 2 Extra credit
-- [x] Connect your chatroom to some back-end of your choice using SocketIO or any tool ( Connected to online bot API)
+- [x] Connect your chatroom to some back-end of your choice using SocketIO or any tool ( Connected to online chat bot API)
 
 ### TODO Part 3 
 - [x] navigation bar or menu 
