@@ -288,9 +288,9 @@ public class LoginActivity extends AppCompatActivity {
                                         return super.setConfirmButtonText(text);
                                     }
                                 }
-                                        .setTopColorRes(R.color.colorAccent)
+                                        .setTopColorRes(R.color.error)
                                         .setIcon(R.drawable.ic_add_friend)
-                                        .setTitle("Register false")
+                                        .setTitle("Registration Error!")
                                         .setMessage("Account exists or weak password!")
                                         .setConfirmButtonText("ok")
                                         .setCancelable(false)
@@ -347,9 +347,9 @@ public class LoginActivity extends AppCompatActivity {
                                         return super.setConfirmButtonText(text);
                                     }
                                 }
-                                        .setTopColorRes(R.color.colorAccent)
+                                        .setTopColorRes(R.color.error)
                                         .setIcon(R.drawable.ic_person_low)
-                                        .setTitle("Login false")
+                                        .setTitle("Login Error")
                                         .setMessage("Account does not exist or wrong password!")
                                         .setCancelable(false)
                                         .setConfirmButtonText("Ok")
@@ -414,9 +414,9 @@ public class LoginActivity extends AppCompatActivity {
                             return super.setConfirmButtonText(text);
                         }
                     }
-                            .setTopColorRes(R.color.colorAccent)
+                            .setTopColorRes(R.color.error)
                             .setIcon(R.drawable.ic_pass_reset)
-                            .setTitle("False")
+                            .setTitle("Invalid Email")
                             .setMessage("Error sending email to " + email)
                             .setConfirmButtonText("Ok")
                             .show();

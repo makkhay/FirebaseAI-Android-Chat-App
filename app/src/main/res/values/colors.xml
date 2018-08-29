@@ -16,6 +16,7 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="lime">#cddc39</color>
+    <color name ="error">#af0303</color>
 
     <color name="black_overlay">#66000000</color>
 
