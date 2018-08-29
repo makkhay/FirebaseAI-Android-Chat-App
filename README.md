@@ -24,6 +24,12 @@ A chatting app powered by AI bot. In addition, this app also demonstrates the us
 ![chat_demo](https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/first.gif)
 
 <div style={{display: flex; flex-direction: row}}>
+  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/onboarding.png" width="270" />
+  <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/nav_menu.png" width="270" />
+
+</div>
+
+<div style={{display: flex; flex-direction: row}}>
   <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/login.png" width="270" />
   <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/register.png" width="270" />
   <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/phone_register.png" width="270" />
@@ -35,6 +41,9 @@ A chatting app powered by AI bot. In addition, this app also demonstrates the us
   <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/dashboard.png" width="270" />
   <img src="https://github.com/makkhay/FirebaseAI-Android-Chat-App/blob/master/barchart.png" width="270" />
 </div>
+
+
+
 
  ## Firebase registered user database 
 <div style={{display: flex; flex-direction: row}}> 
