@@ -16,6 +16,7 @@ A chatting app powered by AI bot. In addition, this app also demonstrates the us
 - Login credentials are stored in firebase database for authentication. 
 - Automatic sign in when phone number is used.  
 - Powered by AI bot so that users can have a logical conversation.
+- Use Realm to store data locally 
 - Demonstrates different charts such as graph, piechart, line chart, duo chart and bar graphs.
 
 
