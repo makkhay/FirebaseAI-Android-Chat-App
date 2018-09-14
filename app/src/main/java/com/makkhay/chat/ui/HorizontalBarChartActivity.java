@@ -23,12 +23,15 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 import com.makkhay.chat.R;
+import com.makkhay.chat.util.DayAxisValueFormatter;
+import com.makkhay.chat.util.MyAxisValueFormatter;
 
 import java.util.ArrayList;
 
@@ -36,8 +39,6 @@ public class HorizontalBarChartActivity extends AppCompatActivity implements OnS
         OnChartValueSelectedListener {
 
     protected HorizontalBarChart mChart;
-    private SeekBar mSeekBarX, mSeekBarY;
-    private TextView tvX, tvY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,18 +53,10 @@ public class HorizontalBarChartActivity extends AppCompatActivity implements OnS
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        tvX = (TextView) findViewById(R.id.tvXMax);
-        tvY = (TextView) findViewById(R.id.tvYMax);
 
-        mSeekBarX = (SeekBar)findViewById(R.id.seekBar1);
-        mSeekBarY = (SeekBar)findViewById(R.id.seekBar2);
 
         mChart = (HorizontalBarChart) findViewById(R.id.chart1);
-        mChart.setOnChartValueSelectedListener(this);
-        // mChart.setHighlightEnabled(false);
-
         mChart.setDrawBarShadow(false);
-
         mChart.setDrawValueAboveBar(true);
 
         mChart.getDescription().setEnabled(false);
@@ -75,149 +68,53 @@ public class HorizontalBarChartActivity extends AppCompatActivity implements OnS
         // scaling can now only be done on x- and y-axis separately
         mChart.setPinchZoom(false);
 
-        // draw shadows for each bar that show the maximum value
-        // mChart.setDrawBarShadow(true);
-
         mChart.setDrawGridBackground(false);
+        // mChart.setDrawYLabels(false);
 
-        XAxis xl = mChart.getXAxis();
-        xl.setPosition(XAxisPosition.BOTTOM);
-//        xl.setTypeface(mTfLight);
-        xl.setDrawAxisLine(true);
-        xl.setDrawGridLines(false);
-        xl.setGranularity(10f);
+        IAxisValueFormatter xAxisFormatter = new DayAxisValueFormatter(mChart);
 
-        YAxis yl = mChart.getAxisLeft();
-//        yl.setTypeface(mTfLight);
-        yl.setDrawAxisLine(true);
-        yl.setDrawGridLines(true);
-        yl.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-//        yl.setInverted(true);
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setPosition(XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setGranularity(1f); // only intervals of 1 day
+        xAxis.setLabelCount(7);
+        xAxis.setValueFormatter(xAxisFormatter);
 
-        YAxis yr = mChart.getAxisRight();
-//        yr.setTypeface(mTfLight);
-        yr.setDrawAxisLine(true);
-        yr.setDrawGridLines(false);
-        yr.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-//        yr.setInverted(true);
+        IAxisValueFormatter custom = new MyAxisValueFormatter();
 
-        setData(12, 50);
-        mChart.setFitBars(true);
-        mChart.animateY(2500);
+        YAxis leftAxis = mChart.getAxisLeft();
+        leftAxis.setLabelCount(8, false);
+        leftAxis.setValueFormatter(custom);
+        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        leftAxis.setSpaceTop(15f);
+        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
 
-        // setting data
-        mSeekBarY.setProgress(50);
-        mSeekBarX.setProgress(12);
-
-        mSeekBarY.setOnSeekBarChangeListener(this);
-        mSeekBarX.setOnSeekBarChangeListener(this);
+        YAxis rightAxis = mChart.getAxisRight();
+        rightAxis.setDrawGridLines(false);
+        rightAxis.setLabelCount(8, false);
+        rightAxis.setValueFormatter(custom);
+        rightAxis.setSpaceTop(15f);
+        rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
 
         Legend l = mChart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
         l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         l.setDrawInside(false);
-        l.setFormSize(8f);
+        l.setForm(Legend.LegendForm.SQUARE);
+        l.setFormSize(9f);
+        l.setTextSize(11f);
         l.setXEntrySpace(4f);
-    }
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.bar, menu);
-//        return true;
-//    }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        switch (item.getItemId()) {
-//            case R.id.actionToggleValues: {
-//                List<IBarDataSet> sets = mChart.getData()
-//                        .getDataSets();
-//
-//                for (IBarDataSet iSet : sets) {
-//
-//                    IBarDataSet set = (BarDataSet) iSet;
-//                    set.setDrawValues(!set.isDrawValuesEnabled());
-//                }
-//
-//                mChart.invalidate();
-//                break;
-//            }
-//            case R.id.actionToggleIcons: {
-//                List<IBarDataSet> sets = mChart.getData()
-//                        .getDataSets();
-//
-//                for (IBarDataSet iSet : sets) {
-//
-//                    IBarDataSet set = (BarDataSet) iSet;
-//                    set.setDrawIcons(!set.isDrawIconsEnabled());
-//                }
-//
-//                mChart.invalidate();
-//                break;
-//            }
-//            case R.id.actionToggleHighlight: {
-//                if(mChart.getData() != null) {
-//                    mChart.getData().setHighlightEnabled(!mChart.getData().isHighlightEnabled());
-//                    mChart.invalidate();
-//                }
-//                break;
-//            }
-//            case R.id.actionTogglePinch: {
-//                if (mChart.isPinchZoomEnabled())
-//                    mChart.setPinchZoom(false);
-//                else
-//                    mChart.setPinchZoom(true);
-//
-//                mChart.invalidate();
-//                break;
-//            }
-//            case R.id.actionToggleAutoScaleMinMax: {
-//                mChart.setAutoScaleMinMaxEnabled(!mChart.isAutoScaleMinMaxEnabled());
-//                mChart.notifyDataSetChanged();
-//                break;
-//            }
-//            case R.id.actionToggleBarBorders: {
-//                for (IBarDataSet set : mChart.getData().getDataSets())
-//                    ((BarDataSet)set).setBarBorderWidth(set.getBarBorderWidth() == 1.f ? 0.f : 1.f);
-//
-//                mChart.invalidate();
-//                break;
-//            }
-//            case R.id.animateX: {
-//                mChart.animateX(3000);
-//                break;
-//            }
-//            case R.id.animateY: {
-//                mChart.animateY(3000);
-//                break;
-//            }
-//            case R.id.animateXY: {
-//
-//                mChart.animateXY(3000, 3000);
-//                break;
-//            }
-//            case R.id.actionSave: {
-//                if (mChart.saveToGallery("title" + System.currentTimeMillis(), 50)) {
-//                    Toast.makeText(getApplicationContext(), "Saving SUCCESSFUL!",
-//                            Toast.LENGTH_SHORT).show();
-//                } else
-//                    Toast.makeText(getApplicationContext(), "Saving FAILED!", Toast.LENGTH_SHORT)
-//                            .show();
-//                break;
-//            }
-//        }
-//        return true;
-//    }
+
+        setData(12, 50);
+
+    }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-        tvX.setText("" + (mSeekBarX.getProgress() + 1));
-        tvY.setText("" + (mSeekBarY.getProgress()));
 
-        setData(mSeekBarX.getProgress() + 1, mSeekBarY.getProgress());
         mChart.setFitBars(true);
         mChart.invalidate();
     }
@@ -256,7 +153,8 @@ public class HorizontalBarChartActivity extends AppCompatActivity implements OnS
             mChart.getData().notifyDataChanged();
             mChart.notifyDataSetChanged();
         } else {
-            set1 = new BarDataSet(yVals1, "DataSet 1");
+            set1 = new BarDataSet(yVals1, "Total Spending By person");
+
 
             set1.setDrawIcons(false);
 

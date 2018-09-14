@@ -91,7 +91,7 @@
             android:divider="@drawable/chat_divider"
             android:scrollbarStyle="outsideOverlay"
             android:layout_above="@+id/bottomlayout"
-            android:stackFromBottom="false"
+            android:stackFromBottom="true"
             android:transcriptMode="normal"/>
 
         <LinearLayout

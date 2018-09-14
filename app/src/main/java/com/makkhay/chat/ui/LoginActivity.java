@@ -36,6 +36,7 @@ import com.makkhay.chat.R;
 import com.makkhay.chat.data.SharedPreferenceHelper;
 import com.makkhay.chat.data.StaticConfig;
 import com.makkhay.chat.model.User;
+import com.makkhay.chat.util.MyPreferences;
 import com.yarolegovich.lovelydialog.LovelyInfoDialog;
 import com.yarolegovich.lovelydialog.LovelyProgressDialog;
 
@@ -71,6 +72,18 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        boolean isFirstTime = MyPreferences.isFirst(LoginActivity.this);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if( user!= null){
+            Intent i = new Intent(this, ChatActivity.class);
+            startActivity(i);
+        } if(isFirstTime){
+            Intent i = new Intent(this, OnBoardingActivity.class);
+            startActivity(i);
+        }
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         editTextUsername = (EditText) findViewById(R.id.et_username);
@@ -176,10 +189,10 @@ public class LoginActivity extends AppCompatActivity {
                     // User is signed in
                     StaticConfig.UID = user.getUid();
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    if (firstTimeAccess) {
-                        startActivity(new Intent(LoginActivity.this, ChatActivity.class));
-                        LoginActivity.this.finish();
-                    }
+//                    if (firstTimeAccess) {
+//                        startActivity(new Intent(LoginActivity.this, ChatActivity.class));
+//                        LoginActivity.this.finish();
+//                    }
                 } else {
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
@@ -234,7 +247,10 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         setResult(RESULT_CANCELED, null);
-        finish();
+        Intent start = new Intent(Intent.ACTION_MAIN);
+        start.addCategory(Intent.CATEGORY_HOME);
+        start.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(start);
     }
 
     private boolean validate(String emailStr, String password) {

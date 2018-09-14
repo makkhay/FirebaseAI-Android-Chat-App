@@ -99,11 +99,11 @@ public class DashboardActivity extends AppCompatActivity {
      */
     private void prepareAlbums() {
         int[] covers = new int[]{
-                R.drawable.linechart1,
-                R.drawable.duo3,
+                R.drawable.line,
+                R.drawable.duo,
                 R.drawable.bar3,
-                R.drawable.pie4,
-                R.drawable.bar5,
+                R.drawable.pie,
+                R.drawable.horiz,
         };
 
         ChartModel a = new ChartModel("Line",  covers[0]);

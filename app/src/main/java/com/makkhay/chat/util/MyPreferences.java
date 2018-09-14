@@ -22,6 +22,18 @@ public class MyPreferences {
         return first;
     }
 
+
+    public static boolean isLog(Context context){
+        final SharedPreferences reader = context.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
+        final boolean first = reader.getBoolean("is_log", true);
+        if(first){
+            final SharedPreferences.Editor editor = reader.edit();
+            editor.putBoolean("is_log", false);
+            editor.commit();
+        }
+        return first;
+    }
+
     public static boolean isFirstTutorial(Context context){
         final SharedPreferences reader = context.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
         final boolean first = reader.getBoolean("is_first_tut", true);

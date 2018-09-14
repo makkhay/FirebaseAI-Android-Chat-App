@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 
 import com.github.paolorotolo.appintro.AppIntro;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.makkhay.chat.R;
 import com.makkhay.chat.util.MyPreferences;
 import com.makkhay.chat.util.SampleSlide;
@@ -28,7 +30,9 @@ public class OnBoardingActivity extends AppIntro {
 
         boolean isFirstTime = MyPreferences.isFirst(OnBoardingActivity.this);
 
-        if(!isFirstTime){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(!isFirstTime && user!= null){
             Intent i = new Intent(this, ChatActivity.class);
             startActivity(i);
         }
@@ -52,6 +56,7 @@ public class OnBoardingActivity extends AppIntro {
         // Do something when users tap on Skip button.
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
+        finish();
 
     }
 
@@ -61,6 +66,7 @@ public class OnBoardingActivity extends AppIntro {
         // Do something when users tap on Done button.
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
+        finish();
 
     }
 
@@ -69,6 +75,7 @@ public class OnBoardingActivity extends AppIntro {
         super.onSlideChanged(oldFragment, newFragment);
         // Do something when the slide changes.
     }
+
 
 
 }

@@ -63,6 +63,7 @@ import com.makkhay.chat.util.ExpandableListAdapter;
 import com.makkhay.chat.util.MyPreferences;
 import com.yarolegovich.lovelydialog.LovelyChoiceDialog;
 import com.yarolegovich.lovelydialog.LovelyInfoDialog;
+import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import org.json.JSONObject;
 
@@ -194,18 +195,26 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
                                 @Override
                                 public void onItemsSelected(List<Integer> positions, List<String> items) {
 
+                                    Toast.makeText(ChatActivity.this,"Money sent", Toast.LENGTH_SHORT).show();
                                 }
                             })
+
                             .setConfirmButtonText("Confirm")
                             .show();
                 } else if(childPosition == 1 && groupPosition == 1 ){
-                    // Show a dialog when the button is pressed
-                    new LovelyInfoDialog(ChatActivity.this)
+
+
+                    new LovelyStandardDialog(ChatActivity.this)
                             .setTopColorRes(R.color.colorPrimaryDark)
-                            .setIcon(R.drawable.ic_menu_send)
-                            //This will add Don't show again checkbox to the dialog. You can pass any ID as argument
-                            .setTitle("Mute Chat ?")
-                            .setMessage("By doing so all notification will be muted. ")
+                            .setButtonsColorRes(R.color.black)
+                            .setTitle("Mute Chat?")
+                            .setMessage("By doing so all notification will be muted.")
+                            .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Toast.makeText(context, "Chat muted", Toast.LENGTH_SHORT).show();
+                                }
+                            })
                             .show();
 
                 }
@@ -554,12 +563,11 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
     }
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+    Intent start = new Intent(Intent.ACTION_MAIN);
+    start.addCategory(Intent.CATEGORY_HOME);
+    start.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    startActivity(start);
+
     }
 
     @Override
@@ -578,9 +586,11 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Toast.makeText(getApplicationContext(),"Signed out", Toast.LENGTH_SHORT).show();
-            FirebaseAuth.getInstance().signOut();
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            firebaseAuth.signOut();
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);
+            finish();
             return true;
         }
 

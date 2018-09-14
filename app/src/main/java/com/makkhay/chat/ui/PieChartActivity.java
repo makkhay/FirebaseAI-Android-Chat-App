@@ -39,14 +39,13 @@ public class PieChartActivity extends AppCompatActivity implements OnSeekBarChan
         OnChartValueSelectedListener {
 
     private PieChart mChart;
-    private SeekBar mSeekBarX, mSeekBarY;
-    private TextView tvX, tvY;
+
 
     protected String[] mParties = new String[] {
-            "Party A", "Party B", "Party C", "Party D", "Party E", "Party F", "Party G", "Party H",
-            "Party I", "Party J", "Party K", "Party L", "Party M", "Party N", "Party O", "Party P",
-            "Party Q", "Party R", "Party S", "Party T", "Party U", "Party V", "Party W", "Party X",
-            "Party Y", "Party Z"
+            "Week 1",  "Week 2", "Week 3", "Week 4", "Week 5", "Week 6",
+            "Week 7", "Week 8", "Week 9", "Week 10", "Week 11", "Week 12", "Week 13",
+            "Week 14", "Week 15", "Week 16", "Week 17", "Week 18", "Week 19", "Week 20", "Week 21",
+            "Week 22", "Week 23", "Week 24", "Week 25", "Week 26" ,
     };
 
     @Override
@@ -65,13 +64,7 @@ public class PieChartActivity extends AppCompatActivity implements OnSeekBarChan
 
 
 
-        tvX = (TextView) findViewById(R.id.tvXMax);
-        tvY = (TextView) findViewById(R.id.tvYMax);
 
-        mSeekBarX = (SeekBar) findViewById(R.id.seekBar1);
-        mSeekBarY = (SeekBar) findViewById(R.id.seekBar2);
-        mSeekBarX.setProgress(4);
-        mSeekBarY.setProgress(10);
 
         mChart = (PieChart) findViewById(R.id.chart1);
         mChart.setUsePercentValues(true);
@@ -80,8 +73,6 @@ public class PieChartActivity extends AppCompatActivity implements OnSeekBarChan
 
         mChart.setDragDecelerationFrictionCoef(0.95f);
 
-//        mChart.setCenterTextTypeface(mTfLight);
-        mChart.setCenterText(generateCenterSpannableText());
 
         mChart.setDrawHoleEnabled(true);
         mChart.setHoleColor(Color.WHITE);
@@ -89,7 +80,7 @@ public class PieChartActivity extends AppCompatActivity implements OnSeekBarChan
         mChart.setTransparentCircleColor(Color.WHITE);
         mChart.setTransparentCircleAlpha(110);
 
-        mChart.setHoleRadius(58f);
+        mChart.setHoleRadius(38f);
         mChart.setTransparentCircleRadius(61f);
 
         mChart.setDrawCenterText(true);
@@ -110,8 +101,7 @@ public class PieChartActivity extends AppCompatActivity implements OnSeekBarChan
 //        mChart.animateY(1400, Easing.EaseInOutQuad);
         // mChart.spin(2000, 0, 360);
 
-        mSeekBarX.setOnSeekBarChangeListener(this);
-        mSeekBarY.setOnSeekBarChangeListener(this);
+
 
         Legend l = mChart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
@@ -128,88 +118,11 @@ public class PieChartActivity extends AppCompatActivity implements OnSeekBarChan
         mChart.setEntryLabelTextSize(12f);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.pie, menu);
-//        return true;
-//    }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        switch (item.getItemId()) {
-//            case R.id.actionToggleValues: {
-//                for (IDataSet<?> set : mChart.getData().getDataSets())
-//                    set.setDrawValues(!set.isDrawValuesEnabled());
-//
-//                mChart.invalidate();
-//                break;
-//            }
-//            case R.id.actionToggleIcons: {
-//                for (IDataSet<?> set : mChart.getData().getDataSets())
-//                    set.setDrawIcons(!set.isDrawIconsEnabled());
-//
-//                mChart.invalidate();
-//                break;
-//            }
-//            case R.id.actionToggleHole: {
-//                if (mChart.isDrawHoleEnabled())
-//                    mChart.setDrawHoleEnabled(false);
-//                else
-//                    mChart.setDrawHoleEnabled(true);
-//                mChart.invalidate();
-//                break;
-//            }
-//            case R.id.actionDrawCenter: {
-//                if (mChart.isDrawCenterTextEnabled())
-//                    mChart.setDrawCenterText(false);
-//                else
-//                    mChart.setDrawCenterText(true);
-//                mChart.invalidate();
-//                break;
-//            }
-//            case R.id.actionToggleXVals: {
-//
-//                mChart.setDrawEntryLabels(!mChart.isDrawEntryLabelsEnabled());
-//                mChart.invalidate();
-//                break;
-//            }
-//            case R.id.actionSave: {
-//                // mChart.saveToGallery("title"+System.currentTimeMillis());
-//                mChart.saveToPath("title" + System.currentTimeMillis(), "");
-//                break;
-//            }
-//            case R.id.actionTogglePercent:
-//                mChart.setUsePercentValues(!mChart.isUsePercentValuesEnabled());
-//                mChart.invalidate();
-//                break;
-//            case R.id.animateX: {
-//                mChart.animateX(1400);
-//                break;
-//            }
-//            case R.id.animateY: {
-//                mChart.animateY(1400);
-//                break;
-//            }
-//            case R.id.animateXY: {
-//                mChart.animateXY(1400, 1400);
-//                break;
-//            }
-//            case R.id.actionToggleSpin: {
-//                mChart.spin(1000, mChart.getRotationAngle(), mChart.getRotationAngle() + 360, Easing.EaseInCubic);
-//                break;
-//            }
-//        }
-//        return true;
-//    }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-        tvX.setText("" + (mSeekBarX.getProgress()));
-        tvY.setText("" + (mSeekBarY.getProgress()));
-
-        setData(mSeekBarX.getProgress(), mSeekBarY.getProgress());
     }
 
     private void setData(int count, float range) {
@@ -226,7 +139,7 @@ public class PieChartActivity extends AppCompatActivity implements OnSeekBarChan
                     getResources().getDrawable(R.drawable.plus_x)));
         }
 
-        PieDataSet dataSet = new PieDataSet(entries, "Election Results");
+        PieDataSet dataSet = new PieDataSet(entries, "Weekly Spending");
 
         dataSet.setDrawIcons(false);
 
@@ -271,17 +184,7 @@ public class PieChartActivity extends AppCompatActivity implements OnSeekBarChan
         mChart.invalidate();
     }
 
-    private SpannableString generateCenterSpannableText() {
 
-        SpannableString s = new SpannableString("Election Result\n United States");
-        s.setSpan(new RelativeSizeSpan(1.7f), 0, 14, 0);
-        s.setSpan(new StyleSpan(Typeface.NORMAL), 14, s.length() - 15, 0);
-        s.setSpan(new ForegroundColorSpan(Color.GRAY), 14, s.length() - 15, 0);
-        s.setSpan(new RelativeSizeSpan(.8f), 14, s.length() - 15, 0);
-        s.setSpan(new StyleSpan(Typeface.ITALIC), s.length() - 14, s.length(), 0);
-        s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length() - 14, s.length(), 0);
-        return s;
-    }
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {

@@ -1,20 +1,12 @@
 package com.makkhay.chat.ui;
 
 
-import android.annotation.SuppressLint;
-import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -22,31 +14,25 @@ import com.github.mikephil.charting.components.Legend.LegendForm;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.XAxis.XAxisPosition;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.components.YAxis.AxisDependency;
 import com.github.mikephil.charting.components.YAxis.YAxisLabelPosition;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.interfaces.datasets.IDataSet;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.MPPointF;
 import com.makkhay.chat.R;
 import com.makkhay.chat.model.GradientColor;
+import com.makkhay.chat.util.DayAxisValueFormatter;
+import com.makkhay.chat.util.MyAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BarChartActivity extends AppCompatActivity implements OnSeekBarChangeListener,
-        OnChartValueSelectedListener {
+public class BarChartActivity extends AppCompatActivity
+       {
 
     protected BarChart mChart;
-    private SeekBar mSeekBarX, mSeekBarY;
-    private TextView tvX, tvY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +47,9 @@ public class BarChartActivity extends AppCompatActivity implements OnSeekBarChan
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        tvX = (TextView) findViewById(R.id.tvXMax);
-        tvY = (TextView)  findViewById(R.id.tvYMax);
 
-        mSeekBarX = (SeekBar)findViewById(R.id.seekBar1);
-        mSeekBarY = (SeekBar) findViewById(R.id.seekBar2);
 
         mChart = (BarChart) findViewById(R.id.chart1);
-        mChart.setOnChartValueSelectedListener(this);
 
         mChart.setDrawBarShadow(false);
         mChart.setDrawValueAboveBar(true);
@@ -85,16 +66,20 @@ public class BarChartActivity extends AppCompatActivity implements OnSeekBarChan
         mChart.setDrawGridBackground(false);
         // mChart.setDrawYLabels(false);
 
+        IAxisValueFormatter xAxisFormatter = new DayAxisValueFormatter(mChart);
 
         XAxis xAxis = mChart.getXAxis();
         xAxis.setPosition(XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setGranularity(1f); // only intervals of 1 day
         xAxis.setLabelCount(7);
+        xAxis.setValueFormatter(xAxisFormatter);
 
+        IAxisValueFormatter custom = new MyAxisValueFormatter();
 
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.setLabelCount(8, false);
+        leftAxis.setValueFormatter(custom);
         leftAxis.setPosition(YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setSpaceTop(15f);
         leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
@@ -102,6 +87,7 @@ public class BarChartActivity extends AppCompatActivity implements OnSeekBarChan
         YAxis rightAxis = mChart.getAxisRight();
         rightAxis.setDrawGridLines(false);
         rightAxis.setLabelCount(8, false);
+        rightAxis.setValueFormatter(custom);
         rightAxis.setSpaceTop(15f);
         rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
 
@@ -114,220 +100,81 @@ public class BarChartActivity extends AppCompatActivity implements OnSeekBarChan
         l.setFormSize(9f);
         l.setTextSize(11f);
         l.setXEntrySpace(4f);
-        // l.setExtra(ColorTemplate.VORDIPLOM_COLORS, new String[] { "abc",
-        // "def", "ghj", "ikl", "mno" });
-        // l.setCustom(ColorTemplate.VORDIPLOM_COLORS, new String[] { "abc",
-        // "def", "ghj", "ikl", "mno" });
-
 
 
         setData(12, 50);
 
-        // setting data
-        mSeekBarY.setProgress(50);
-        mSeekBarX.setProgress(12);
 
-        mSeekBarY.setOnSeekBarChangeListener(this);
-        mSeekBarX.setOnSeekBarChangeListener(this);
 
-        // mChart.setDrawLegend(false);
+
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.bar, menu);
-//        return true;
-//    }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        switch (item.getItemId()) {
-//            case R.id.actionToggleValues: {
-//                for (IDataSet set : mChart.getData().getDataSets())
-//                    set.setDrawValues(!set.isDrawValuesEnabled());
-//
-//                mChart.invalidate();
-//                break;
-//            }
-//            case R.id.actionToggleIcons: {
-//                for (IDataSet set : mChart.getData().getDataSets())
-//                    set.setDrawIcons(!set.isDrawIconsEnabled());
-//
-//                mChart.invalidate();
-//                break;
-//            }
-//            case R.id.actionToggleHighlight: {
-//                if (mChart.getData() != null) {
-//                    mChart.getData().setHighlightEnabled(!mChart.getData().isHighlightEnabled());
-//                    mChart.invalidate();
-//                }
-//                break;
-//            }
-//            case R.id.actionTogglePinch: {
-//                if (mChart.isPinchZoomEnabled())
-//                    mChart.setPinchZoom(false);
-//                else
-//                    mChart.setPinchZoom(true);
-//
-//                mChart.invalidate();
-//                break;
-//            }
-//            case R.id.actionToggleAutoScaleMinMax: {
-//                mChart.setAutoScaleMinMaxEnabled(!mChart.isAutoScaleMinMaxEnabled());
-//                mChart.notifyDataSetChanged();
-//                break;
-//            }
-//            case R.id.actionToggleBarBorders: {
-//                for (IBarDataSet set : mChart.getData().getDataSets())
-//                    ((BarDataSet) set).setBarBorderWidth(set.getBarBorderWidth() == 1.f ? 0.f : 1.f);
-//
-//                mChart.invalidate();
-//                break;
-//            }
-//            case R.id.animateX: {
-//                mChart.animateX(3000);
-//                break;
-//            }
-//            case R.id.animateY: {
-//                mChart.animateY(3000);
-//                break;
-//            }
-//            case R.id.animateXY: {
-//
-//                mChart.animateXY(3000, 3000);
-//                break;
-//            }
-//            case R.id.actionSave: {
-//                if (mChart.saveToGallery("title" + System.currentTimeMillis(), 50)) {
-//                    Toast.makeText(getApplicationContext(), "Saving SUCCESSFUL!",
-//                            Toast.LENGTH_SHORT).show();
-//                } else
-//                    Toast.makeText(getApplicationContext(), "Saving FAILED!", Toast.LENGTH_SHORT)
-//                            .show();
-//                break;
-//            }
-//        }
-//        return true;
-//    }
+           private void setData(int count, float range) {
 
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+               float start = 1f;
 
-        tvX.setText("" + (mSeekBarX.getProgress() + 2));
-        tvY.setText("" + (mSeekBarY.getProgress()));
+               ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
 
-        setData(mSeekBarX.getProgress() + 1 , mSeekBarY.getProgress());
-        mChart.invalidate();
-    }
+               for (int i = (int) start; i < start + count + 1; i++) {
+                   float mult = (range + 1);
+                   float val = (float) (Math.random() * mult);
 
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-        // TODO Auto-generated method stub
-    }
+                   if (Math.random() * 100 < 25) {
+                       yVals1.add(new BarEntry(i, val, getResources().getDrawable(R.drawable.ic_menu_send)));
+                   } else {
+                       yVals1.add(new BarEntry(i, val));
+                   }
+               }
 
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-        // TODO Auto-generated method stub
-    }
+               BarDataSet set1;
 
-    private void setData(int count, float range) {
+               if (mChart.getData() != null &&
+                       mChart.getData().getDataSetCount() > 0) {
+                   set1 = (BarDataSet) mChart.getData().getDataSetByIndex(0);
+                   set1.setValues(yVals1);
+                   mChart.getData().notifyDataChanged();
+                   mChart.notifyDataSetChanged();
+               } else {
+                   set1 = new BarDataSet(yVals1, "The year 2018");
 
-        float start = 1f;
+                   set1.setDrawIcons(false);
 
-        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
 
-        for (int i = (int) start; i < start + count + 1; i++) {
-            float mult = (range + 1);
-            float val = (float) (Math.random() * mult);
 
-            if (Math.random() * 100 < 25) {
-                yVals1.add(new BarEntry(i, val, getResources().getDrawable(R.drawable.ic_search)));
-            } else {
-                yVals1.add(new BarEntry(i, val));
-            }
-        }
+                   int startColor1 = ContextCompat.getColor(this, android.R.color.holo_orange_light);
+                   int startColor2 = ContextCompat.getColor(this, android.R.color.holo_blue_light);
+                   int startColor3 = ContextCompat.getColor(this, android.R.color.holo_orange_light);
+                   int startColor4 = ContextCompat.getColor(this, android.R.color.holo_green_light);
+                   int startColor5 = ContextCompat.getColor(this, android.R.color.holo_red_light);
+                   int endColor1 = ContextCompat.getColor(this, android.R.color.holo_blue_dark);
+                   int endColor2 = ContextCompat.getColor(this, android.R.color.holo_purple);
+                   int endColor3 = ContextCompat.getColor(this, android.R.color.holo_green_dark);
+                   int endColor4 = ContextCompat.getColor(this, android.R.color.holo_red_dark);
+                   int endColor5 = ContextCompat.getColor(this, android.R.color.holo_orange_dark);
 
-        BarDataSet set1;
+                   List<GradientColor> gradientColors = new ArrayList<>();
+                   gradientColors.add(new GradientColor(startColor1, endColor1));
+                   gradientColors.add(new GradientColor(startColor2, endColor2));
+                   gradientColors.add(new GradientColor(startColor3, endColor3));
+                   gradientColors.add(new GradientColor(startColor4, endColor4));
+                   gradientColors.add(new GradientColor(startColor5, endColor5));
 
-        if (mChart.getData() != null &&
-                mChart.getData().getDataSetCount() > 0) {
-            set1 = (BarDataSet) mChart.getData().getDataSetByIndex(0);
-            set1.setValues(yVals1);
-            mChart.getData().notifyDataChanged();
-            mChart.notifyDataSetChanged();
-        } else {
-            set1 = new BarDataSet(yVals1, "The year 2017");
+                   set1.setColors(ColorTemplate.MATERIAL_COLORS);
 
-            set1.setDrawIcons(false);
 
-//            set1.setColors(ColorTemplate.MATERIAL_COLORS);
+                   ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
+                   dataSets.add(set1);
 
-            /*int startColor = ContextCompat.getColor(this, android.R.color.holo_blue_dark);
-            int endColor = ContextCompat.getColor(this, android.R.color.holo_blue_bright);
-            set1.setGradientColor(startColor, endColor);*/
+                   BarData data = new BarData(dataSets);
+                   data.setValueTextSize(10f);
+                   data.setBarWidth(0.9f);
 
-            int startColor1 = ContextCompat.getColor(this, android.R.color.holo_orange_light);
-            int startColor2 = ContextCompat.getColor(this, android.R.color.holo_blue_light);
-            int startColor3 = ContextCompat.getColor(this, android.R.color.holo_orange_light);
-            int startColor4 = ContextCompat.getColor(this, android.R.color.holo_green_light);
-            int startColor5 = ContextCompat.getColor(this, android.R.color.holo_red_light);
-            int endColor1 = ContextCompat.getColor(this, android.R.color.holo_blue_dark);
-            int endColor2 = ContextCompat.getColor(this, android.R.color.holo_purple);
-            int endColor3 = ContextCompat.getColor(this, android.R.color.holo_green_dark);
-            int endColor4 = ContextCompat.getColor(this, android.R.color.holo_red_dark);
-            int endColor5 = ContextCompat.getColor(this, android.R.color.holo_orange_dark);
+                   mChart.setData(data);
+               }
+           }
 
-            List<GradientColor> gradientColors = new ArrayList<>();
-            gradientColors.add(new GradientColor(startColor1, endColor1));
-            gradientColors.add(new GradientColor(startColor2, endColor2));
-            gradientColors.add(new GradientColor(startColor3, endColor3));
-            gradientColors.add(new GradientColor(startColor4, endColor4));
-            gradientColors.add(new GradientColor(startColor5, endColor5));
-
-//            set1.setGradientColors(gradientColors);
-
-//            set1.setBarBorderColor(startColor1);
-
-            set1.setColors(ColorTemplate.MATERIAL_COLORS);
-
-            ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
-            dataSets.add(set1);
-
-            BarData data = new BarData(dataSets);
-            data.setValueTextSize(10f);
-            data.setBarWidth(0.9f);
-
-            mChart.setData(data);
-        }
-    }
-
-    protected RectF mOnValueSelectedRectF = new RectF();
-
-    @SuppressLint("NewApi")
-    @Override
-    public void onValueSelected(Entry e, Highlight h) {
-
-        if (e == null)
-            return;
-
-        RectF bounds = mOnValueSelectedRectF;
-        mChart.getBarBounds((BarEntry) e, bounds);
-        MPPointF position = mChart.getPosition(e, AxisDependency.LEFT);
-
-        Log.i("bounds", bounds.toString());
-        Log.i("position", position.toString());
-
-        Log.i("x-index",
-                "low: " + mChart.getLowestVisibleX() + ", high: "
-                        + mChart.getHighestVisibleX());
-
-        MPPointF.recycleInstance(position);
-    }
-
-    @Override
-    public void onNothingSelected() { }
-    @Override
+           @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
