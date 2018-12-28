@@ -69,7 +69,6 @@ credentials or forgot their password, then they can reset their credentials)
 send)
 - [x] User can copy / paste text from the chat log into the message box
 - [x] Your chatroom must be interactive.
-- [ ] Allow users to post videos and photos in chat using some basic animation ( The online chat API doesn't accept anything other than a string so picture and video cannot be displayed but users can pick. Animation is also added. ) 
 - [x] Add a chat shortcut button with various shortcut options and some basic animations
 
 ### TODO Part 2 Extra credit
