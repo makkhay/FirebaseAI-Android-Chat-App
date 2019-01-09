@@ -78,8 +78,6 @@ send)
 - [x] navigation bar or menu 
 - [x] dashboard must be able to display 5 variety of charts
 
-### TODO Part 3 Extra credit
-- [x] Make your charts look good!
 
 
 
