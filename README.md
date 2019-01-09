@@ -58,7 +58,7 @@ A chatting app powered by AI bot. In addition, this app also demonstrates the us
 - [x] Add a signup UX flow and logic to your app (e.g., if user doesn’t have an account, they can
 create one). The signup screen should be presented with an animation.
 
-### TODO Part 1 Extra credit
+### TODO Part 1 Extra 
 - [x] Add a forgot/reset password UX flow or logic to your app (e.g., if user entered the wrong
 credentials or forgot their password, then they can reset their credentials)
 - [x] Connect your app to a back-end API service that can store credentials in a database ( connected with firebase)
@@ -71,7 +71,7 @@ send)
 - [x] Your chatroom must be interactive.
 - [x] Add a chat shortcut button with various shortcut options and some basic animations
 
-### TODO Part 2 Extra credit
+### TODO Part 2 Extra
 - [x] Connect your chatroom to some back-end of your choice using SocketIO or any tool ( Connected to online chat bot API)
 
 ### TODO Part 3 
