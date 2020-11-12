@@ -1,4 +1,5 @@
 package com.makkhay.chat.ui;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
@@ -13,15 +14,8 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
-import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,7 +23,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -40,6 +33,13 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieComposition;
@@ -55,6 +55,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.makkhay.chat.R;
 import com.makkhay.chat.model.Message;
@@ -62,7 +63,6 @@ import com.makkhay.chat.util.Config;
 import com.makkhay.chat.util.ExpandableListAdapter;
 import com.makkhay.chat.util.MyPreferences;
 import com.yarolegovich.lovelydialog.LovelyChoiceDialog;
-import com.yarolegovich.lovelydialog.LovelyInfoDialog;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import org.json.JSONObject;
@@ -77,10 +77,9 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 
+public class ChatActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-public class ChatActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
-
-    private String name="";
+    private String name = "";
     private ImageButton btnSend, btnPick;
     private EditText inputMsg;
     private ListView listViewMessages;
@@ -95,7 +94,7 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
     ImageView imageView;
     private LottieAnimationView animationView;
     private TextView chatTV;
-    private  Intent changeActivity;
+    private Intent changeActivity;
     View view_Group;
     private DrawerLayout mDrawerLayout;
     ExpandableListAdapter mMenuAdapter;
@@ -104,15 +103,15 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
     HashMap<String, List<String>> listDataChild;
     int unicode = 0x1F4AC;
     //Icons for expandable menu
-    public static int[] icon = { R.drawable.icon_dashboard, R.drawable.icons_chat};
+    public static int[] icon = {R.drawable.icon_dashboard, R.drawable.icons_chat};
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            expandableList.setIndicatorBounds(expandableList.getRight()- 80, expandableList.getWidth());
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            expandableList.setIndicatorBounds(expandableList.getRight() - 80, expandableList.getWidth());
         } else {
-            expandableList.setIndicatorBoundsRelative(expandableList.getRight()- 80, expandableList.getWidth());
+            expandableList.setIndicatorBoundsRelative(expandableList.getRight() - 80, expandableList.getWidth());
         }
     }
 
@@ -131,13 +130,13 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
         boolean isFirstTime = MyPreferences.isFirstTutorial(ChatActivity.this);
 
         // Only show once
-        if(isFirstTime){
+        if (isFirstTime) {
 
             showTutorial();
         }
 
         chatTV = (TextView) findViewById(R.id.chat_title);
-        chatTV.setText("AI chat  "+ getEmojiByUnicode(unicode));
+        chatTV.setText("AI chat  " + getEmojiByUnicode(unicode));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -170,21 +169,21 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
                                         int groupPosition,
                                         int childPosition, long id) {
                 // Menu 1; do something on click
-                if(childPosition==0 && groupPosition == 0){
+                if (childPosition == 0 && groupPosition == 0) {
                     changeActivity = new Intent(ChatActivity.this, DashboardActivity.class);
                     startActivity(changeActivity);
-                } else if(childPosition == 1 && groupPosition == 0 ){
+                } else if (childPosition == 1 && groupPosition == 0) {
 
                     changeActivity = new Intent(ChatActivity.this, PieChartActivity.class);
                     startActivity(changeActivity);
-                } else if(childPosition == 2 && groupPosition == 0 ){
+                } else if (childPosition == 2 && groupPosition == 0) {
 
                     changeActivity = new Intent(ChatActivity.this, BarChartActivity.class);
                     startActivity(changeActivity);
                 }
 
                 //Menu 2; do something on click
-                if(childPosition==0 && groupPosition == 1){
+                if (childPosition == 0 && groupPosition == 1) {
                     // Show a dialog when the button is pressed
                     String[] items = getResources().getStringArray(R.array.food);
                     new LovelyChoiceDialog(ChatActivity.this)
@@ -195,13 +194,13 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
                                 @Override
                                 public void onItemsSelected(List<Integer> positions, List<String> items) {
 
-                                    Toast.makeText(ChatActivity.this,"Money sent", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ChatActivity.this, "Money sent", Toast.LENGTH_SHORT).show();
                                 }
                             })
 
                             .setConfirmButtonText("Confirm")
                             .show();
-                } else if(childPosition == 1 && groupPosition == 1 ){
+                } else if (childPosition == 1 && groupPosition == 1) {
 
 
                     new LovelyStandardDialog(ChatActivity.this)
@@ -243,12 +242,13 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
         queue = Volley.newRequestQueue(context);
         inflater = getLayoutInflater();
         messageList = new ArrayList<>();
-        name ="You";
-        realm = Realm.getInstance(context);
+        name = "You";
+        // Initialize Realm (just once per application)
+        Realm.init(context);
+        realm = Realm.getDefaultInstance();
 
         final RealmResults<Message> results = realm.where(Message.class).findAll();
-        if(results.size() > 0)
-        {
+        if (results.size() > 0) {
             realm.beginTransaction();
             for (int i = 0; i < results.size(); i++) {
                 messageList.add(results.get(i));
@@ -267,7 +267,7 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
                 Message mssg = messageList.get(i);
                 String clipboardText = mssg.getMessage();
                 Log.d(TAG, "onItemClick: " + mssg.getMessage());
-                Toast.makeText(getApplicationContext(),"Copied Text to Clipboard ",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Copied Text to Clipboard ", Toast.LENGTH_LONG).show();
 
                 // Save the clicked text to clipboard for copy pasting
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -300,13 +300,13 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
-                        if(id == R.id.send_Pic){
+                        if (id == R.id.send_Pic) {
                             Intent intent = new Intent();
                             intent.setType("image/*");
                             intent.setAction(Intent.ACTION_GET_CONTENT);
                             startActivityForResult(Intent.createChooser(intent, "Select a Picture"), RESULT_LOAD_IMAGE);
 
-                        } else if(id == R.id.send_video){
+                        } else if (id == R.id.send_video) {
                             Intent intent = new Intent();
                             intent.setType("video/*");
                             intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -324,17 +324,15 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
 
     }
 
-    private void sendMessage()
-    {
+    private void sendMessage() {
         String msg = inputMsg.getText().toString().trim();
 
-        if( msg.length()==0) {
+        if (msg.length() == 0) {
             Toast.makeText(getApplicationContext(), "Enter a message", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if(!networkIsAvailable(context))
-        {
+        if (!networkIsAvailable(context)) {
             Toast.makeText(getApplicationContext(), "Connect to internet", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -352,40 +350,37 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
 
         messageList.add(message);
         mAdapter.notifyDataSetChanged();
-        msg = msg.replace(" ","+");
+        msg = msg.replace(" ", "+");
         sendMessageToServer(msg);
     }
 
     /**
      * A method to send message to server.
+     *
      * @param msg is a string, which is sent to chatbot api for the messaging purposes.
      */
-    private void sendMessageToServer(final String msg)
-    {
-        String url = Config.URL+"?apiKey="+Config.apiKey+"&message="+msg+"&chatBotID="+Config.chatBotID+"&externalID="+Config.externalID;
-        JsonObjectRequest jsonObjectRequest= new JsonObjectRequest(Request.Method.GET, url,null,
+    private void sendMessageToServer(final String msg) {
+        String url = Config.URL + "?apiKey=" + Config.apiKey + "&message=" + msg + "&chatBotID=" + Config.chatBotID + "&externalID=" + Config.externalID;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         if (response != null && response.length() > 0) {
                             try {
-                                if(response.getInt("success")==1)
-                                {
+                                if (response.getInt("success") == 1) {
                                     realm.beginTransaction();
                                     Message message = realm.createObject(Message.class);
                                     JSONObject m = response.getJSONObject("message");
                                     message.setChatBotName(m.optString("chatBotName", ""));
                                     message.setChatBotID(m.optInt("chatBotID"));
                                     message.setMessage(m.optString("message", ""));
-                                    message.setEmotion(m.optString("emotions",null));
+                                    message.setEmotion(m.optString("emotions", null));
                                     message.setSelf(false);
                                     realm.commitTransaction();
                                     appendMessage(message);
-                                }
-                                else
-                                {
-                                    String error=response.getString("errorMessage");
-                                    Toast.makeText(getApplicationContext(), "Error: "+error, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    String error = response.getString("errorMessage");
+                                    Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (Exception e) {
                                 Toast.makeText(getApplicationContext(), "json parse error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -421,6 +416,7 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
     /**
      * This is a method to check if the request code sent while sending image and video is met.
      * If the code matches then do something
+     *
      * @param reqCode
      * @param resultCode
      * @param data
@@ -436,15 +432,15 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                 imageView.setImageBitmap(selectedImage);
                 displayAnimation("loading.json");
-                Toast.makeText(getApplicationContext(),"Success!! ",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Success!! ", Toast.LENGTH_SHORT).show();
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
             }
 
-        }else {
-            Toast.makeText(getApplicationContext(), "You haven't picked anything",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "You haven't picked anything", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -517,6 +513,7 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
 
     /**
      * Checks if internet is connected
+     *
      * @param context
      * @return
      */
@@ -542,7 +539,7 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
     }
 
     @Override
-    protected void onStop () {
+    protected void onStop() {
         super.onStop();
         if (queue != null) {
             queue.cancelAll(TAG);
@@ -557,16 +554,18 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
         realm.close();
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();
     }
+
     @Override
     public void onBackPressed() {
-    Intent start = new Intent(Intent.ACTION_MAIN);
-    start.addCategory(Intent.CATEGORY_HOME);
-    start.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    startActivity(start);
+        Intent start = new Intent(Intent.ACTION_MAIN);
+        start.addCategory(Intent.CATEGORY_HOME);
+        start.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(start);
 
     }
 
@@ -576,6 +575,7 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
         getMenuInflater().inflate(R.menu.test, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -585,7 +585,7 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Toast.makeText(getApplicationContext(),"Signed out", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Signed out", Toast.LENGTH_SHORT).show();
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             firebaseAuth.signOut();
             Intent i = new Intent(this, LoginActivity.class);
@@ -604,10 +604,11 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     /**
      * This method will display the targetview tutorial.
      */
-    private void showTutorial(){
+    private void showTutorial() {
         TapTargetView.showFor(this,                 // `this` is an Activity
                 TapTarget.forView(findViewById(R.id.inputMsg), "Get Started", "Type your message here and the AI bot will reply you ")
                         // All options below are optional
@@ -635,9 +636,10 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
 
     /**
      * This a method to display the lottie animation
+     *
      * @param animFileName is passed on to this method so that users can select their desired file
      */
-    private void displayAnimation(final String animFileName){
+    private void displayAnimation(final String animFileName) {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
@@ -668,10 +670,11 @@ public class ChatActivity extends AppCompatActivity  implements NavigationView.O
 
     /**
      * Method to display the emoji in TextView
+     *
      * @param unicode
      * @return
      */
-    public String getEmojiByUnicode(int unicode){
+    public String getEmojiByUnicode(int unicode) {
         return new String(Character.toChars(unicode));
     }
 

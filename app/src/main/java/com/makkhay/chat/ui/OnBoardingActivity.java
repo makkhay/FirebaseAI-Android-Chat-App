@@ -1,12 +1,11 @@
 package com.makkhay.chat.ui;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.github.paolorotolo.appintro.AppIntro;
 import com.google.firebase.auth.FirebaseAuth;

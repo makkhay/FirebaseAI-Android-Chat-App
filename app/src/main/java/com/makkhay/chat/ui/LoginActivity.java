@@ -4,11 +4,6 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,15 +11,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -45,7 +44,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-
 public class LoginActivity extends AppCompatActivity {
     private static String TAG = "LoginActivity";
     FloatingActionButton fab;
@@ -58,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser user;
     private boolean firstTimeAccess;
-    private static final String[] spinnerItem = {"Choose Country","United States (+1)", "Other"};
+    private static final String[] spinnerItem = {"Choose Country", "United States (+1)", "Other"};
     private Button sendCodeButton;
     private EditText phoneEditText;
 
@@ -77,10 +75,11 @@ public class LoginActivity extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if( user!= null){
+        if (user != null) {
             Intent i = new Intent(this, ChatActivity.class);
             startActivity(i);
-        } if(isFirstTime){
+        }
+        if (isFirstTime) {
             Intent i = new Intent(this, OnBoardingActivity.class);
             startActivity(i);
         }
@@ -119,13 +118,13 @@ public class LoginActivity extends AppCompatActivity {
                                                int position, long id) {
 
                         int selectedCountry = parent.getSelectedItemPosition();
-                        if(selectedCountry==0){
-                            Toast.makeText(getApplicationContext()," Select Your Country Code ", Toast.LENGTH_LONG).show();
+                        if (selectedCountry == 0) {
+                            Toast.makeText(getApplicationContext(), " Select Your Country Code ", Toast.LENGTH_LONG).show();
                             sendCodeButton.setEnabled(false);
 
                         }
 
-                        if(selectedCountry == 1) {
+                        if (selectedCountry == 1) {
                             sendCodeButton.setEnabled(true);
 
 
@@ -135,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String number = phoneEditText.getText().toString().trim();
                                     if (number.isEmpty() || number.length() < 10) {
                                         phoneEditText.requestFocus();
-                                        Toast.makeText(getApplicationContext()," Valid Phone number Required", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), " Valid Phone number Required", Toast.LENGTH_LONG).show();
                                         return;
                                     }
 
@@ -148,8 +147,9 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             });
 
-                        } if(selectedCountry ==2){
-                            Toast.makeText(getApplicationContext()," Your Country is not supported :(", Toast.LENGTH_LONG).show();
+                        }
+                        if (selectedCountry == 2) {
+                            Toast.makeText(getApplicationContext(), " Your Country is not supported :(", Toast.LENGTH_LONG).show();
                             sendCodeButton.setEnabled(false);
                         }
 
@@ -266,8 +266,6 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid email", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 
 
     class AuthUtils {
@@ -415,29 +413,29 @@ public class LoginActivity extends AppCompatActivity {
                                     .show();
                         }
                     })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    new LovelyInfoDialog(LoginActivity.this) {
+                    .addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public LovelyInfoDialog setConfirmButtonText(String text) {
-                            findView(com.yarolegovich.lovelydialog.R.id.ld_btn_confirm).setOnClickListener(new View.OnClickListener() {
+                        public void onFailure(@NonNull Exception e) {
+                            new LovelyInfoDialog(LoginActivity.this) {
                                 @Override
-                                public void onClick(View view) {
-                                    dismiss();
+                                public LovelyInfoDialog setConfirmButtonText(String text) {
+                                    findView(com.yarolegovich.lovelydialog.R.id.ld_btn_confirm).setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            dismiss();
+                                        }
+                                    });
+                                    return super.setConfirmButtonText(text);
                                 }
-                            });
-                            return super.setConfirmButtonText(text);
+                            }
+                                    .setTopColorRes(R.color.error)
+                                    .setIcon(R.drawable.ic_pass_reset)
+                                    .setTitle("Invalid Email")
+                                    .setMessage("Error sending email to " + email)
+                                    .setConfirmButtonText("Ok")
+                                    .show();
                         }
-                    }
-                            .setTopColorRes(R.color.error)
-                            .setIcon(R.drawable.ic_pass_reset)
-                            .setTitle("Invalid Email")
-                            .setMessage("Error sending email to " + email)
-                            .setConfirmButtonText("Ok")
-                            .show();
-                }
-            });
+                    });
         }
 
 
@@ -470,9 +468,6 @@ public class LoginActivity extends AppCompatActivity {
             FirebaseDatabase.getInstance().getReference().child("user/" + user.getUid()).setValue(newUser);
         }
     }
-
-
-
 
 
 }

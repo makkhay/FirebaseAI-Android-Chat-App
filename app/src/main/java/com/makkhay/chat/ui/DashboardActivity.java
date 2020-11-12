@@ -1,22 +1,20 @@
 package com.makkhay.chat.ui;
 
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-
-
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.makkhay.chat.R;
 import com.makkhay.chat.model.ChartModel;
 import com.makkhay.chat.util.ChartAdapter;
@@ -80,7 +78,7 @@ public class DashboardActivity extends AppCompatActivity {
 
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == - 1) {
+                if (scrollRange == -1) {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
@@ -106,7 +104,7 @@ public class DashboardActivity extends AppCompatActivity {
                 R.drawable.horiz,
         };
 
-        ChartModel a = new ChartModel("Line",  covers[0]);
+        ChartModel a = new ChartModel("Line", covers[0]);
         chartList.add(a);
 
         a = new ChartModel("Duo Line", covers[1]);
@@ -115,10 +113,10 @@ public class DashboardActivity extends AppCompatActivity {
         a = new ChartModel("Vertical Graph ", covers[2]);
         chartList.add(a);
 
-        a = new ChartModel("Pie Chart",  covers[3]);
+        a = new ChartModel("Pie Chart", covers[3]);
         chartList.add(a);
 
-        a = new ChartModel("Horizontal Graph",  covers[4]);
+        a = new ChartModel("Horizontal Graph", covers[4]);
         chartList.add(a);
 
         adapter.notifyDataSetChanged();

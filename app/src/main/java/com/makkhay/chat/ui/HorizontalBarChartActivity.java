@@ -1,18 +1,17 @@
 package com.makkhay.chat.ui;
 
 
-
 import android.annotation.SuppressLint;
 import android.graphics.RectF;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -52,7 +51,6 @@ public class HorizontalBarChartActivity extends AppCompatActivity implements OnS
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
 
 
         mChart = (HorizontalBarChart) findViewById(R.id.chart1);
@@ -148,7 +146,7 @@ public class HorizontalBarChartActivity extends AppCompatActivity implements OnS
 
         if (mChart.getData() != null &&
                 mChart.getData().getDataSetCount() > 0) {
-            set1 = (BarDataSet)mChart.getData().getDataSetByIndex(0);
+            set1 = (BarDataSet) mChart.getData().getDataSetByIndex(0);
             set1.setValues(yVals1);
             mChart.getData().notifyDataChanged();
             mChart.notifyDataSetChanged();
@@ -172,6 +170,7 @@ public class HorizontalBarChartActivity extends AppCompatActivity implements OnS
     }
 
     protected RectF mOnValueSelectedRectF = new RectF();
+
     @SuppressLint("NewApi")
     @Override
     public void onValueSelected(Entry e, Highlight h) {

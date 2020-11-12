@@ -1,20 +1,16 @@
 package com.makkhay.chat.ui;
 
 
-
-
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -27,7 +23,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.makkhay.chat.R;
@@ -35,7 +30,6 @@ import com.makkhay.chat.util.DayAxisValueFormatter;
 import com.makkhay.chat.util.MyAxisValueFormatter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class LineChartActivity extends AppCompatActivity implements OnSeekBarChangeListener,
         OnChartValueSelectedListener {
@@ -56,8 +50,7 @@ public class LineChartActivity extends AppCompatActivity implements OnSeekBarCha
         }
 
 
-
-        mChart = (LineChart)findViewById(R.id.chart1);
+        mChart = (LineChart) findViewById(R.id.chart1);
 
         mChart.getDescription().setEnabled(false);
 
@@ -115,7 +108,6 @@ public class LineChartActivity extends AppCompatActivity implements OnSeekBarCha
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
 
-
         // redraw
         mChart.invalidate();
     }
@@ -132,7 +124,7 @@ public class LineChartActivity extends AppCompatActivity implements OnSeekBarCha
 
         ArrayList<Entry> yVals2 = new ArrayList<Entry>();
 
-        for (int i = 0; i < count-1; i++) {
+        for (int i = 0; i < count - 1; i++) {
             float mult = range;
             float val = (float) (Math.random() * mult) + 450;
             yVals2.add(new Entry(i, val));
@@ -228,6 +220,7 @@ public class LineChartActivity extends AppCompatActivity implements OnSeekBarCha
         // TODO Auto-generated method stub
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

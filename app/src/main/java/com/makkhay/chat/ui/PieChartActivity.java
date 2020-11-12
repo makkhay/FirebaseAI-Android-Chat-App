@@ -1,24 +1,16 @@
 package com.makkhay.chat.ui;
 
 
-
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
-import android.text.style.StyleSpan;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -41,11 +33,11 @@ public class PieChartActivity extends AppCompatActivity implements OnSeekBarChan
     private PieChart mChart;
 
 
-    protected String[] mParties = new String[] {
-            "Week 1",  "Week 2", "Week 3", "Week 4", "Week 5", "Week 6",
+    protected String[] mParties = new String[]{
+            "Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6",
             "Week 7", "Week 8", "Week 9", "Week 10", "Week 11", "Week 12", "Week 13",
             "Week 14", "Week 15", "Week 16", "Week 17", "Week 18", "Week 19", "Week 20", "Week 21",
-            "Week 22", "Week 23", "Week 24", "Week 25", "Week 26" ,
+            "Week 22", "Week 23", "Week 24", "Week 25", "Week 26",
     };
 
     @Override
@@ -61,9 +53,6 @@ public class PieChartActivity extends AppCompatActivity implements OnSeekBarChan
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-
-
 
 
         mChart = (PieChart) findViewById(R.id.chart1);
@@ -102,7 +91,6 @@ public class PieChartActivity extends AppCompatActivity implements OnSeekBarChan
         // mChart.spin(2000, 0, 360);
 
 
-
         Legend l = mChart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
@@ -119,7 +107,6 @@ public class PieChartActivity extends AppCompatActivity implements OnSeekBarChan
     }
 
 
-
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
@@ -133,7 +120,7 @@ public class PieChartActivity extends AppCompatActivity implements OnSeekBarChan
 
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
-        for (int i = 0; i < count ; i++) {
+        for (int i = 0; i < count; i++) {
             entries.add(new PieEntry((float) ((Math.random() * mult) + mult / 5),
                     mParties[i % mParties.length],
                     getResources().getDrawable(R.drawable.plus_x)));
@@ -183,7 +170,6 @@ public class PieChartActivity extends AppCompatActivity implements OnSeekBarChan
 
         mChart.invalidate();
     }
-
 
 
     @Override
